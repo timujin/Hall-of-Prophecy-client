@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Hall of Prophecy</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_twitter_login">Log in with Twitter</string>
+
+    <string name="consumer_key">mqy52jK4VaN1Em7MnDvENoIrX</string>
+    <string name="consumer_secret">6unqCoCw4SYzBNGpYqEb0kGKAYwJmTt32CWka5mUJLd3nXGZPj</string>
+    <string name="title_activity_create_twitter_prediction">Create Twitter prediction</string>
+</resources>

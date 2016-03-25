@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.artemsinyakov.hallofprophecy">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="966784c523f521a2d4953480366dc73c458bb8a1" />
+
+        <activity
+            android:name=".Activities.TwitterLogin"
+            android:label="@string/title_activity_twitter_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.CreateTwitterPrediction"
+            android:label="@string/title_activity_create_twitter_prediction"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".Activities.ViewPrediction"></activity>
+    </application>
+
+</manifest>
