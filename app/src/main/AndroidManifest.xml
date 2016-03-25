@@ -33,8 +33,11 @@
             android:name=".Activities.CreateTwitterPrediction"
             android:label="@string/title_activity_create_twitter_prediction"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".Activities.ViewPrediction"></activity>
+        <activity android:name=".Activities.ViewPrediction" />
+        <activity
+            android:name=".Activities.UserProfile"
+            android:label="@string/title_activity_user_profile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

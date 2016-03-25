@@ -59,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        findViewById(R.id.profile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
