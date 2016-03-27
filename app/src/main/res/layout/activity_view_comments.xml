@@ -24,4 +24,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/prediction_text"/>
+
+
+    <EditText android:id="@+id/comment_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comments_list"
+        android:hint="Comment" />
+
+
+    <Button
+        android:id="@+id/comment_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_text"
+        android:text="Post comment"/>
+
 </RelativeLayout>

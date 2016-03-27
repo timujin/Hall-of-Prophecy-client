@@ -122,6 +122,7 @@ public class ViewPrediction extends AppCompatActivity {
                 intent.putExtra("text", predictionText);
                 intent.putExtra("names", wagerNames);
                 intent.putExtra("values", wagerValues);
+                intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
@@ -132,6 +133,7 @@ public class ViewPrediction extends AppCompatActivity {
                 intent.putExtra("text", predictionText);
                 intent.putExtra("names", commentNames);
                 intent.putExtra("texts", commentTexts);
+                intent.putExtra("url", url);
                 startActivity(intent);
             }
         });

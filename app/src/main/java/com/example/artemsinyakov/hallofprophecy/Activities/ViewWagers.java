@@ -1,15 +1,29 @@
 package com.example.artemsinyakov.hallofprophecy.Activities;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.accessibility.AccessibilityRecord;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.twitter.sdk.android.Twitter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 public class ViewWagers extends AppCompatActivity {
 
@@ -18,6 +32,9 @@ public class ViewWagers extends AppCompatActivity {
     boolean[] wagerValues = {};
     String[] fullWagerTexts = {};
     ListView listView;
+    String url;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +42,11 @@ public class ViewWagers extends AppCompatActivity {
         setContentView(R.layout.activity_view_wagers);
 
         listView = (ListView) findViewById(R.id.wagers_list);
-        Intent intent = getIntent();
+        intent = getIntent();
         predictionText = intent.getStringExtra("text");
         wagerNames = intent.getStringArrayExtra("names");
         wagerValues = intent.getBooleanArrayExtra("values");
+        url = intent.getStringExtra("url");
 
         ((TextView) findViewById(R.id.prediction_text)).setText(predictionText);
 
@@ -39,6 +57,8 @@ public class ViewWagers extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.user_profile_predictions_list, this.fullWagerTexts);
         listView.setAdapter(adapter);
 
+        setUpButtons();
+
     }
     private void consolidateWagers() {
         ArrayList<String> fwt = new ArrayList<>();
@@ -46,5 +66,45 @@ public class ViewWagers extends AppCompatActivity {
             fwt.add(wagerNames[i] + ": " + (wagerValues[i]?"true":"false"));
         }
         fullWagerTexts = fwt.toArray(new String[0]);
+    }
+
+    private void setUpButtons() {
+        findViewById(R.id.will_happen).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordWager(true);
+            }
+        });
+
+        findViewById(R.id.will_not_happen).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recordWager(false);
+            }
+        });
+    }
+
+    private void recordWager(Boolean wager) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("wager", wager?"1":"0");
+            json.put("author", Twitter.getInstance().core.getSessionManager().getActiveSession().getAuthToken().token);
+        } catch (JSONException e) {
+            Toast.makeText(this, "Could not record wager.", Toast.LENGTH_LONG).show();
+        }
+        final Activity activity = this;
+        HoPRequestHelper.post(this, "/prediction/twitter/wager/"+url, json, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Intent intent = new Intent(ViewWagers.this, ViewPrediction.class);
+                intent.putExtra("url", url);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(activity, new String(responseBody), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

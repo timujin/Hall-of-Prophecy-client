@@ -23,4 +23,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/prediction_text"/>
+
+
+    <Button
+        android:id="@+id/will_happen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_below="@id/wagers_list"
+        android:text="It will happen!"/>
+    <Button
+        android:id="@+id/will_not_happen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_toRightOf="@id/will_happen"
+        android:layout_below="@id/wagers_list"
+        android:text="It will never happen!"/>
+
 </RelativeLayout>

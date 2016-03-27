@@ -39,7 +39,8 @@
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.ViewWagers" />
-        <activity android:name=".Activities.ViewComments"></activity>
+        <activity android:name=".Activities.ViewComments" />
+        <activity android:name=".Activities.MakeWager"></activity>
     </application>
 
 </manifest>
