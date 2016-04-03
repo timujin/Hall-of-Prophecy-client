@@ -20,11 +20,20 @@
         tools:context=".Activities.TwitterLogin"
         tools:showIn="@layout/activity_twitter_login">
 
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/Logo_description"
+            android:layout_above="@id/logo"
+            android:src="@drawable/logo"/>
+
         <com.twitter.sdk.android.core.identity.TwitterLoginButton
             android:id="@+id/twitter_login_button"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"/>
 
 
     </RelativeLayout>

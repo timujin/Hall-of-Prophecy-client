@@ -6,5 +6,23 @@
     <string name="consumer_key">mqy52jK4VaN1Em7MnDvENoIrX</string>
     <string name="consumer_secret">6unqCoCw4SYzBNGpYqEb0kGKAYwJmTt32CWka5mUJLd3nXGZPj</string>
     <string name="title_activity_create_twitter_prediction">Create Twitter prediction</string>
-    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="title_activity_user_profile">UserProfile</string>\
+
+    <string name="Logo_description">Logo</string>
+    <string name="User_banner">Banner</string>
+    <string name="User_avatar">Avatar</string>
+    <string name="Add_twitter_prediction">Make a prediction with Twitter</string>
+    <string name="View_my_past_predictions">View my prediction profile</string>
+    <string name="View_my_predictions">View upcoming predictions</string>
+    <string name="Logout">Logout</string>
+
+    <string name="Prediction_text_tooltip">What do you think is going to happen?</string>
+    <string name="Prediction_text_hint">Prediction text</string>
+    <string name="Arbiter_tooltip">What user is going to be the judge?</string>
+    <string name="At_sign">\@</string>
+    <string name="Pick_a_date">When is it going to happen?</string>
+    <string name="Open_date_picker">Open calendar</string>
+    <string name="Date_not_chosen">Date not chosen</string>
+    <string name="Create_prediction">Record prediction!</string>
+    <string name="Create_error">Prediction not created.</string>
 </resources>

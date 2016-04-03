@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
@@ -41,6 +42,13 @@ public class TwitterLogin extends AppCompatActivity {
 
         final Activity activity = this;
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginButton.setClickable(false);
+                loginButton.setVisibility(View.INVISIBLE);
+            }
+        });
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
@@ -62,6 +70,7 @@ public class TwitterLogin extends AppCompatActivity {
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                         authSuccess();
                     }
+
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                         authFailure();
@@ -71,11 +80,11 @@ public class TwitterLogin extends AppCompatActivity {
 
             @Override
             public void failure(TwitterException exception) {
-                Log.d("TwitterKit", "Login with Twitter failure", exception);
+                authFailure();
             }
         });
 
-
+        HoPRequestHelper.setUp();
     }
 
     @Override
@@ -99,6 +108,8 @@ public class TwitterLogin extends AppCompatActivity {
         cookieManager.removeSessionCookie();
         Twitter.getSessionManager().clearActiveSession();
         Twitter.logOut();
+        loginButton.setVisibility(View.VISIBLE);
+        loginButton.setClickable(true);
     }
 
 

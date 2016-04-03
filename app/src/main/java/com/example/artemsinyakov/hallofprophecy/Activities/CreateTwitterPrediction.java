@@ -33,7 +33,9 @@ public class CreateTwitterPrediction extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
     private TextView dateLabel;
-    private long unixDate;
+    private long unixDate = 0;
+    private EditText predictionText;
+    private EditText arbiter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,16 @@ public class CreateTwitterPrediction extends AppCompatActivity {
 
         setUpDatePicker();
 
-        final EditText predictionText = (EditText) findViewById(R.id.prediction_text);
-        final EditText arbiter = (EditText) findViewById(R.id.arbiter);
+        predictionText = (EditText) findViewById(R.id.prediction_text);
+        arbiter = (EditText) findViewById(R.id.arbiter);
         findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((Button)findViewById(R.id.confirm)).setClickable(false);
+                if (!verifyPredction()) {
+                    ((Button)findViewById(R.id.confirm)).setClickable(true);
+                    return;
+                }
                 recordPrediction(predictionText.getText().toString(), arbiter.getText().toString(), unixDate / 1000);
             }
         });
@@ -68,7 +74,9 @@ public class CreateTwitterPrediction extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
-                if (newDate.before(Calendar.getInstance().getTime())) {
+                Log.e("1", dateFormatter.format(newDate.getTime()));
+                Log.e("2", dateFormatter.format(Calendar.getInstance().getTime()));
+                if (newDate.before(Calendar.getInstance())) {
                     Toast.makeText(context, "Please pick a date in the future.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -90,13 +98,13 @@ public class CreateTwitterPrediction extends AppCompatActivity {
         JSONObject json = new JSONObject();
         try {
             json.put("text", text);
-            json.put("arbiterHandle", arbiter);
+            json.put("arbiterHandle", arbiter.charAt(0)=='@'?arbiter.substring(1).replaceAll("\\s", ""):arbiter.replaceAll("\\s",""));
             json.put("dueDate", date);
             json.put("key", Twitter.getInstance().core.getSessionManager().getActiveSession().getAuthToken().token);
         } catch (JSONException e) {
             predictionFailure();
         }
-
+        Log.e("Sending json", json.toString());
         HoPRequestHelper.post(this, "/prediction/twitter", json, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -115,7 +123,6 @@ public class CreateTwitterPrediction extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 predictionFailure();
-                Log.d("1", new String(responseBody));
             }
         });
     }
@@ -132,6 +139,23 @@ public class CreateTwitterPrediction extends AppCompatActivity {
         intent.putExtra("url", url);
         startActivity(intent);
         finish();
+    }
+
+    private boolean verifyPredction() {
+        if (predictionText.getText().length() < 1) {
+            Toast.makeText(this, "Prediction text is required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (arbiter.getText().length() < 2) {
+            Toast.makeText(this, "Arbiter is required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        // TODO: check is arbiter exists
+        if (unixDate < 1) {
+            Toast.makeText(this, "Date is required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
 }

@@ -12,26 +12,54 @@
     tools:context=".Activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:id="@+id/add_twitter_prediction"
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/banner"
+        android:contentDescription="@string/User_banner"
+        android:src="@drawable/default_banner"
+        android:scaleType="fitXY"/>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:text="Add Twitter prediction"/>
+        android:id="@+id/avatar"
+        android:contentDescription="@string/User_banner"
+        android:scaleType="fitXY"
+        android:layout_below="@id/banner"
+        android:layout_marginTop="-20dp"/>
 
     <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
+        android:id="@+id/add_twitter_prediction"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:text="@string/Add_twitter_prediction"
+        android:layout_below="@id/banner"/>
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_below="@+id/add_twitter_prediction"
-        android:text="Logout"/>
+        android:text="@string/View_my_past_predictions"/>
 
     <Button
-        android:id="@+id/profile"
-        android:layout_width="wrap_content"
+        android:id="@+id/upcoming"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_below="@+id/logout"
-        android:text="View my predictions"/>
+        android:text="@string/View_my_predictions"
+        android:layout_below="@id/profile"/>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_alignParentBottom="true"
+        android:text="@string/Logout"/>
+
+
 </RelativeLayout>

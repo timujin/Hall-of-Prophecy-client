@@ -12,54 +12,79 @@
     tools:context=".Activities.CreateTwitterPrediction"
     tools:showIn="@layout/activity_create_twitter_prediction">
 
-    <EditText android:id="@+id/prediction_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLength="100"
-        android:hint="Prediction text" />
 
     <TextView
-        android:id="@+id/at_label"
+        android:id="@+id/prediction_tooltip"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Prediction_text_tooltip"
+        android:textIsSelectable="false"
+        style="@style/QText"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        />
+
+    <EditText android:id="@+id/prediction_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="130"
+        android:hint="@string/Prediction_text_hint"
+        android:layout_below="@id/prediction_tooltip"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+    <TextView
+        android:id="@+id/arbiter_tooltip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/prediction_text"
-        android:text="\@"
-        android:maxLength="50"
+        android:text="@string/Arbiter_tooltip"
         android:textIsSelectable="false"
+        style="@style/QText"
         />
 
     <EditText android:id="@+id/arbiter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/arbiter_tooltip"
+        android:maxLength="16"
+        android:inputType="text"
+        android:text="@string/At_sign"/>
+
+    <TextView
+        android:id="@+id/date_tooltip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/at_label"
-        android:layout_below="@+id/prediction_text"
-        android:hint="user" />
+        android:layout_below="@+id/arbiter"
+        android:text="@string/Pick_a_date"
+        android:textIsSelectable="false"
+        style="@style/QText"
+        />
 
     <LinearLayout
         android:id="@+id/dateLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/arbiter">
+        android:layout_below="@+id/date_tooltip">
 
         <TextView
             android:id="@+id/dateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Due date"/>
+            android:text="@string/Date_not_chosen"/>
 
         <Button
             android:id="@+id/datePickerConfirm"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Date"/>
+            android:text="@string/Open_date_picker"
+            android:layout_margin="@dimen/activity_horizontal_margin"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/confirm"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dateLayout"
-        android:text="Create prediction"/>
+        android:text="@string/Create_prediction"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

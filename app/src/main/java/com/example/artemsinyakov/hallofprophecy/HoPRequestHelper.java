@@ -13,6 +13,14 @@ public class HoPRequestHelper {
     private static final String BASE_URL = "http://hallofprophecy.xyz:8080";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
+    public static void setUp() {
+        client.setTimeout(5);
+        client.setResponseTimeout(5);
+        client.setConnectTimeout(5);
+        client.setMaxRetriesAndTimeout(5,5);
+        Log.e("1", "set up");
+    }
+
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }

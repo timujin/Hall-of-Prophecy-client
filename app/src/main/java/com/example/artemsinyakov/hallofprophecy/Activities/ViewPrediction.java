@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,10 +70,26 @@ public class ViewPrediction extends AppCompatActivity {
     }
 
     private void displayPrediction(JSONObject json) throws JSONException {
+        Log.e("432", json.toString());
         predictionText = json.getString("text");
         arbiter = json.getString("arbiterHandle");
-        result = json.getString("result") == null? "null" : "something";
-        dueDate = new SimpleDateFormat("MM dd, yyyy").format(new java.util.Date(json.getLong("dueDate")));
+        String res = null;
+        try {
+            res = json.getString("result");
+        } catch (JSONException e) {
+            result = "Undecided";
+        }
+        Log.e("1", res==null?"null":res);
+        if (res != null)
+        if (res.equals("1")) {
+            result = "True";
+        } else if (res.equals("-1")) {
+            result = "False";
+        } else {
+            result = "Undecided";
+        }
+
+        dueDate = new SimpleDateFormat("MM dd, yyyy").format(new java.util.Date(json.getLong("dueDate") * 1000));
         name = json.getString("name");
 
         ((TextView)findViewById(R.id.urlbox)).setText(url);

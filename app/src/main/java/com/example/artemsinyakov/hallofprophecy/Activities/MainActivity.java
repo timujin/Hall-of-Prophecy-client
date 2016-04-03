@@ -2,24 +2,52 @@ package com.example.artemsinyakov.hallofprophecy.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+import android.net.Uri;
 
+import cz.msebera.android.httpclient.Header;
 import io.fabric.sdk.android.Fabric;
 
+import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterApiClient;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
+import com.twitter.sdk.android.tweetui.TweetUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
 
     private TwitterLoginButton loginButton;
+    private ImageView banner;
+    private ImageView avatar;
+
+    static public int screenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Twitter(authConfig));
 
         setContentView(R.layout.activity_main);
-
         setUpButtons();
 
+        HoPRequestHelper.setUp();
     }
 
     private void setUpButtons() {
@@ -79,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
             Intent login = new Intent(MainActivity.this, TwitterLogin.class);
             startActivity(login);
             finish();
+        } else {
+            loadUsersBannerAvatar();
         }
     }
 
@@ -90,4 +120,37 @@ public class MainActivity extends AppCompatActivity {
         loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
+    protected void loadUsersBannerAvatar() {
+        banner = (ImageView) findViewById(R.id.banner);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        screenWidth = size.x;
+
+        avatar = (ImageView) findViewById(R.id.avatar);
+        RelativeLayout.LayoutParams avatarLayout = (RelativeLayout.LayoutParams) avatar.getLayoutParams();
+        avatarLayout.width = screenWidth / 5;
+        avatarLayout.height = screenWidth / 5;
+        avatarLayout.topMargin = -1 * screenWidth / 5;
+        avatar.setLayoutParams(avatarLayout);
+
+        TwitterSession session = Twitter.getInstance().core.getSessionManager().getActiveSession();
+        new ExtendedTwitterAPIClient(session).getUsersService().show(Twitter.getSessionManager().getActiveSession().getUserId(), null, false,
+                new Callback<User>() {
+                    @Override
+                    public void success(Result<User> result) {
+                        if (result.data.profileBannerUrl == null) {
+                            // default banner
+                        } else {
+                            new DownloadImageTask(banner).execute(result.data.profileBannerUrl);
+                            new DownloadAvatarTask(avatar).execute(result.data.profileImageUrl);
+                        }
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        Log.d("twittercommunity", "exception is " + exception);
+                    }
+                });
+    }
 }
