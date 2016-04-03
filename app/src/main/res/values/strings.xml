@@ -6,7 +6,7 @@
     <string name="consumer_key">mqy52jK4VaN1Em7MnDvENoIrX</string>
     <string name="consumer_secret">6unqCoCw4SYzBNGpYqEb0kGKAYwJmTt32CWka5mUJLd3nXGZPj</string>
     <string name="title_activity_create_twitter_prediction">Create Twitter prediction</string>
-    <string name="title_activity_user_profile">UserProfile</string>\
+    <string name="title_activity_user_profile">Prediction Profile</string>\
 
     <string name="Logo_description">Logo</string>
     <string name="User_banner">Banner</string>
@@ -25,4 +25,5 @@
     <string name="Date_not_chosen">Date not chosen</string>
     <string name="Create_prediction">Record prediction!</string>
     <string name="Create_error">Prediction not created.</string>
+    <string name="Invalid_prediction">Invalid prediction!</string>
 </resources>

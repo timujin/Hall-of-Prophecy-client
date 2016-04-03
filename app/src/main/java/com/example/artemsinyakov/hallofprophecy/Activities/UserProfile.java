@@ -1,8 +1,10 @@
 package com.example.artemsinyakov.hallofprophecy.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,34 +25,44 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
 public class UserProfile extends AppCompatActivity {
 
-    String[] predictions = {};
-    String[] predictionIDs = {};
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         listView = (ListView) findViewById(R.id.predictions_list);
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
         loadPredictions(url);
 
+        final Context context = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String openid = predictionIDs[position];
-
-                Intent intent = new Intent(UserProfile.this, ViewPrediction.class);
-                intent.putExtra("url", openid);
-                startActivity(intent);
+                try {
+                    JSONObject obj = (JSONObject) parent.getItemAtPosition(position);
+                    Intent intent = new Intent(UserProfile.this, ViewPrediction.class);
+                    intent.putExtra("url", obj.getString("url"));
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    Toast.makeText(context, "Could not open prediction", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -80,18 +92,33 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void parseList(JSONObject json) throws JSONException {
-        ArrayList<String> pr = new ArrayList<String>();
-        ArrayList<String> id = new ArrayList<String>();
         JSONArray predictions = json.getJSONArray("predictions");
+        ArrayList<JSONObject> predictionsArray = new ArrayList<>();
         for (int i = 0; i<predictions.length(); i++) {
             JSONObject obj = predictions.getJSONObject(i);
-            pr.add(obj.getString("text"));
-            id.add(obj.getString("url"));
+            predictionsArray.add(obj);
         }
-        this.predictions = pr.toArray(new String[0]);
-        this.predictionIDs = id.toArray(new String[0]);
-        Log.e("1", this.predictions[0]);
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.user_profile_predictions_list, this.predictions);
+        Collections.sort(predictionsArray, new predictionsComparator());
+        ArrayAdapter adapter = new ProfilePredictionListAdapter(this, predictionsArray.toArray(new JSONObject[0]));
         listView.setAdapter(adapter);
+    }
+
+    private class predictionsComparator implements Comparator<JSONObject> {
+        @Override
+        public int compare(JSONObject obj1, JSONObject obj2) {
+            try {
+                Date date1 = new java.util.Date(obj1.getLong("dueDate") * 1000);
+                Date date2 = new java.util.Date(obj2.getLong("dueDate") * 1000);
+                if (date1.after(date2)) {
+                    return 1;
+                } else if (date2.after(date1)) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            } catch (JSONException e) {
+                return 0;
+            }
+        }
     }
 }
