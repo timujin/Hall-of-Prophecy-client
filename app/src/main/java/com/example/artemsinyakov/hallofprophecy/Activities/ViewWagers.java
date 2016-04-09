@@ -18,6 +18,7 @@ import com.example.artemsinyakov.hallofprophecy.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.twitter.sdk.android.Twitter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +33,7 @@ public class ViewWagers extends AppCompatActivity {
     boolean[] wagerValues = {};
     String[] fullWagerTexts = {};
     ListView listView;
+    JSONArray wagers = new JSONArray();
     String url;
 
     Intent intent;
@@ -47,7 +49,11 @@ public class ViewWagers extends AppCompatActivity {
         wagerNames = intent.getStringArrayExtra("names");
         wagerValues = intent.getBooleanArrayExtra("values");
         url = intent.getStringExtra("url");
-
+        try {
+            wagers = new JSONArray(intent.getStringExtra("wagers"));
+        } catch (JSONException e) {
+            wagers = new JSONArray();
+        }
         ((TextView) findViewById(R.id.prediction_text)).setText(predictionText);
 
         consolidateWagers();
@@ -62,10 +68,15 @@ public class ViewWagers extends AppCompatActivity {
     }
     private void consolidateWagers() {
         ArrayList<String> fwt = new ArrayList<>();
-        for (int i = 0; i < wagerNames.length; i++) {
-            fwt.add(wagerNames[i] + ": " + (wagerValues[i]?"true":"false"));
+        try {
+            for (int i = 0; i < wagers.length(); i++) {
+                JSONObject obj = wagers.getJSONObject(i);
+                fwt.add("@" + obj.get("handle") + ": " + (obj.getInt("wager") == 1?"True":"False"));
+            }
+        } catch (JSONException e) {
+            // do nothing
         }
-        fullWagerTexts = fwt.toArray(new String[0]);
+        fullWagerTexts = fwt.toArray(new String[wagers.length()]);
     }
 
     private void setUpButtons() {
@@ -99,6 +110,7 @@ public class ViewWagers extends AppCompatActivity {
                 Intent intent = new Intent(ViewWagers.this, ViewPrediction.class);
                 intent.putExtra("url", url);
                 startActivity(intent);
+                finish();
             }
 
             @Override

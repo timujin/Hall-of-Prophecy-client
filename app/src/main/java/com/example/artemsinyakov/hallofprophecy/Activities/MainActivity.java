@@ -2,7 +2,10 @@ package com.example.artemsinyakov.hallofprophecy.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -121,11 +124,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void loadUsersBannerAvatar() {
-        banner = (ImageView) findViewById(R.id.banner);
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         screenWidth = size.x;
+
+        banner = (ImageView) findViewById(R.id.banner);
+
+        Bitmap def = BitmapFactory.decodeResource(getResources(),
+                R.drawable.default_banner);
+
+        int imageWidth = def.getWidth();
+        int imageHeight = def.getHeight();
+
+        int newWidth = MainActivity.screenWidth; //this method should return the width of device screen.
+        float scaleFactor = (float)newWidth/(float)imageWidth;
+        int newHeight = (int)(imageHeight * scaleFactor);
+
+        Bitmap result = Bitmap.createScaledBitmap(def, newWidth, newHeight, true);
+        banner.setImageBitmap(result);
+
+
 
         avatar = (ImageView) findViewById(R.id.avatar);
         RelativeLayout.LayoutParams avatarLayout = (RelativeLayout.LayoutParams) avatar.getLayoutParams();
@@ -141,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     public void success(Result<User> result) {
                         if (result.data.profileBannerUrl == null) {
                             // default banner
+                            new DownloadAvatarTask(avatar).execute(result.data.profileImageUrl);
                         } else {
                             new DownloadImageTask(banner).execute(result.data.profileBannerUrl);
                             new DownloadAvatarTask(avatar).execute(result.data.profileImageUrl);

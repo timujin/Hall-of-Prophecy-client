@@ -14,8 +14,8 @@
         android:id="@+id/prediction_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wait for it..."
-        android:maxLength="50"
+        style="@style/QText"
+        android:layout_margin="16dp"
         android:textIsSelectable="false"
         />
 
@@ -23,21 +23,22 @@
         android:id="@+id/comments_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/prediction_text"/>
+        android:layout_below="@id/prediction_text"
+        android:layout_above="@+id/comment_text"/>
 
 
     <EditText android:id="@+id/comment_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/comments_list"
+        android:layout_above="@+id/comment_post"
         android:hint="Comment" />
 
 
     <Button
         android:id="@+id/comment_post"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/comment_text"
+        android:layout_alignParentBottom="true"
         android:text="Post comment"/>
 
 </RelativeLayout>

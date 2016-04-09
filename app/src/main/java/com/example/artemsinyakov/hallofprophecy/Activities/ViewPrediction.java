@@ -1,12 +1,17 @@
 package com.example.artemsinyakov.hallofprophecy.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +25,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -38,6 +44,11 @@ public class ViewPrediction extends AppCompatActivity {
     private String[] commentNames;
     private String[] commentTexts;
 
+    private JSONArray wagers = new JSONArray();
+    private JSONArray comments = new JSONArray();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +65,7 @@ public class ViewPrediction extends AppCompatActivity {
                     json = new JSONObject(new String(responseBody));
                     displayPrediction(json);
                     parseWagersComments(json);
+                    setUpButtons();
                 } catch (JSONException e) {
                     Log.e("e", e.toString());
                     Toast.makeText(activity, "Could not display prediction - JSON does not parse", Toast.LENGTH_LONG).show();
@@ -65,8 +77,28 @@ public class ViewPrediction extends AppCompatActivity {
                 Toast.makeText(activity, "Could not display prediction - network failure", Toast.LENGTH_LONG).show();
             }
         });
+    }
 
-        setUpButtons();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_view_prediction, menu);
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        final Context context = this;
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Prediction: ");
+                String shareMessage = context.getResources().getString(R.string.site) + "/prediction/twitter/" + url;
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                        shareMessage);
+                startActivity(Intent.createChooser(shareIntent,
+                        "Share prediction."));
+                return true;
+            }
+        });
+        return true;
     }
 
     private void displayPrediction(JSONObject json) throws JSONException {
@@ -77,7 +109,7 @@ public class ViewPrediction extends AppCompatActivity {
         try {
             res = json.getString("result");
         } catch (JSONException e) {
-            result = "Undecided";
+            res = "Undecided";
         }
         Log.e("1", res==null?"null":res);
         if (res != null)
@@ -89,21 +121,20 @@ public class ViewPrediction extends AppCompatActivity {
             result = "Undecided";
         }
 
-        dueDate = new SimpleDateFormat("MM dd, yyyy").format(new java.util.Date(json.getLong("dueDate") * 1000));
+        dueDate = new SimpleDateFormat(getResources().getString(R.string.date_format)).format(new java.util.Date(json.getLong("dueDate") * 1000));
         name = json.getString("name");
 
-        ((TextView)findViewById(R.id.urlbox)).setText(url);
         ((TextView)findViewById(R.id.prediction_text)).setText(predictionText);
-        ((TextView)findViewById(R.id.arbiterHandle)).setText("@" + arbiter);
-        ((TextView)findViewById(R.id.dueDate)).setText(dueDate);
-        ((TextView)findViewById(R.id.username)).setText("Author: " + name);
-        ((TextView)findViewById(R.id.result)).setText("Result: " + result);
+        ((TextView)findViewById(R.id.arbiterHandle)).setText(getResources().getString(R.string.Arbiter_label) + arbiter);
+        ((TextView)findViewById(R.id.dueDate)).setText(getResources().getString(R.string.Due_date) + dueDate);
+        ((TextView)findViewById(R.id.username)).setText(getResources().getString(R.string.Author)  + name);
+        ((TextView)findViewById(R.id.result)).setText(getResources().getString(R.string.Status)  + result);
     }
 
     private void parseWagersComments(JSONObject json) throws JSONException {
         ArrayList<String> wnames = new ArrayList<String>();
         ArrayList<Boolean> wvalues = new ArrayList<Boolean>();
-        JSONArray wagers = json.getJSONArray("wagers");
+        wagers = json.getJSONArray("wagers");
         for (int i = 0; i<wagers.length(); i++) {
             JSONObject obj = wagers.getJSONObject(i);
             wnames.add(obj.getString("handle"));
@@ -119,7 +150,7 @@ public class ViewPrediction extends AppCompatActivity {
 
         ArrayList<String> cnames = new ArrayList<String>();
         ArrayList<String> ctexts = new ArrayList<String>();
-        JSONArray comments = json.getJSONArray("comments");
+        comments = json.getJSONArray("comments");
         Log.e("111", comments.toString());
         for (int i = 0; i<comments.length(); i++) {
             JSONObject obj = comments.getJSONObject(i);
@@ -139,10 +170,12 @@ public class ViewPrediction extends AppCompatActivity {
                 intent.putExtra("text", predictionText);
                 intent.putExtra("names", wagerNames);
                 intent.putExtra("values", wagerValues);
+                intent.putExtra("wagers", wagers.toString());
                 intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
+        ((Button) findViewById(R.id.see_wagers)).setText(getResources().getString(R.string.View_wagers) + "(" + wagers.length() + ")");
         findViewById(R.id.see_comments).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,9 +183,11 @@ public class ViewPrediction extends AppCompatActivity {
                 intent.putExtra("text", predictionText);
                 intent.putExtra("names", commentNames);
                 intent.putExtra("texts", commentTexts);
+                intent.putExtra("comments", comments.toString());
                 intent.putExtra("url", url);
                 startActivity(intent);
             }
         });
+        ((Button) findViewById(R.id.see_comments)).setText(getResources().getString(R.string.View_comments) + "(" + comments.length() + ")");
     }
 }

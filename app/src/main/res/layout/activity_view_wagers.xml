@@ -13,32 +13,44 @@
         android:id="@+id/prediction_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wait for it..."
-        android:maxLength="50"
+        style="@style/QText"
+        android:layout_margin="16dp"
         android:textIsSelectable="false"
         />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttons"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/will_happen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:text="It will happen!"
+            style="?android:attr/buttonBarButtonStyle"/>
+        <Button
+            android:id="@+id/will_not_happen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_toRightOf="@id/will_happen"
+            android:text="It will never happen!"
+            style="?android:attr/buttonBarButtonStyle"/>
+
+
+
+    </LinearLayout>
     <ListView
         android:id="@+id/wagers_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/prediction_text"/>
+        android:layout_below="@id/prediction_text"
+        android:layout_above="@id/buttons"/>
 
-
-    <Button
-        android:id="@+id/will_happen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_below="@id/wagers_list"
-        android:text="It will happen!"/>
-    <Button
-        android:id="@+id/will_not_happen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_toRightOf="@id/will_happen"
-        android:layout_below="@id/wagers_list"
-        android:text="It will never happen!"/>
 
 </RelativeLayout>

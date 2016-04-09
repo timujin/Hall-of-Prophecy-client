@@ -10,19 +10,21 @@
     tools:context="com.example.artemsinyakov.hallofprophecy.Activities.ViewPrediction">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Loading your prediction..."
-        android:id="@+id/urlbox"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/urlbox"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/fab_margin"
+        style="@style/QText"
         android:id="@+id/prediction_text"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/prediction_text"
+        android:id="@+id/username"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
         android:id="@+id/arbiterHandle"/>
     <TextView
         android:layout_width="wrap_content"
@@ -33,27 +35,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dueDate"
-        android:id="@+id/username"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username"
+        style="@style/QText"
         android:id="@+id/result"/>
 
     <Button
         android:id="@+id/see_wagers"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_below="@+id/username"
-        android:text="View wagers"/>
+        android:layout_above="@+id/see_comments"
+        android:text="@string/View_wagers"/>
 
     <Button
         android:id="@+id/see_comments"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_below="@+id/see_wagers"
-        android:text="View comments"/>
+        android:text="@string/View_comments"
+        android:layout_alignParentBottom="true"
+        />
 
 </RelativeLayout>

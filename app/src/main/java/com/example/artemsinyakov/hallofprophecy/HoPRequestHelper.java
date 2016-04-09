@@ -30,12 +30,12 @@ public class HoPRequestHelper {
     }
 
     public static void post(Context context, String url, JSONObject json, AsyncHttpResponseHandler responseHandler) {
-        try {
-            StringEntity entity = new StringEntity(json.toString());
+        //try {
+            StringEntity entity = new StringEntity(json.toString(), "UTF-8");
             Log.d("fun", client.post(context, getAbsoluteUrl(url), entity, "application/json", responseHandler).toString());
-        } catch (UnsupportedEncodingException e) {
-            Log.d("1", e.toString());
-        }
+        //} catch (UnsupportedEncodingException e) {
+        //    Log.d("1", e.toString());
+        //}
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
