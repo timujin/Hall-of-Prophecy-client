@@ -38,6 +38,7 @@ import cz.msebera.android.httpclient.Header;
 public class UserProfile extends AppCompatActivity {
 
     ListView listView;
+    String api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class UserProfile extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.predictions_list);
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
+        api = intent.getStringExtra("api");
         loadPredictions(url);
 
         final Context context = this;
@@ -71,7 +73,7 @@ public class UserProfile extends AppCompatActivity {
 
     private void loadPredictions(String id) {
         final Activity th = this;
-        HoPRequestHelper.get("/user/" + id, null, new AsyncHttpResponseHandler() {
+        HoPRequestHelper.get(api + id, null, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 JSONObject json;

@@ -96,6 +96,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, UserProfile.class);
                 intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
+                intent.putExtra("api", "/user/withwagers/");
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.upcoming).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
+                intent.putExtra("api", "/user/onlyundecided/");
                 startActivity(intent);
             }
         });
