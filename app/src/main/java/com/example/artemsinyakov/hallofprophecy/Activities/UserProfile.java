@@ -63,6 +63,7 @@ public class UserProfile extends AppCompatActivity {
                     intent.putExtra("url", obj.getString("url"));
                     startActivity(intent);
                 } catch (JSONException e) {
+                    Log.e("2", e.toString());
                     Toast.makeText(context, "Could not open prediction", Toast.LENGTH_LONG).show();
                 }
             }

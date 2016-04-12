@@ -55,7 +55,14 @@ public class ViewPrediction extends AppCompatActivity {
         setContentView(R.layout.activity_view_prediction);
 
         Intent intent = getIntent();
-        url = intent.getStringExtra("url");
+        if (intent.getAction() != null && intent.getAction().equals("android.intent.action.VIEW")) {
+            Log.e("1", intent.getAction());
+            Log.e("1", intent.getData().toString());
+            url = intent.getData().getLastPathSegment();
+        } else {
+            url = intent.getStringExtra("url");
+        }
+
         final Activity activity = this;
         HoPRequestHelper.get("/prediction/twitter/" + url, null, new AsyncHttpResponseHandler() {
             @Override
