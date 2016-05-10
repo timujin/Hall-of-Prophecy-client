@@ -13,6 +13,7 @@
     <string name="User_banner">Banner</string>
     <string name="User_avatar">Avatar</string>
     <string name="Add_twitter_prediction">Make a prediction with Twitter</string>
+    <string name="Add_yahoo_finance_prediction">Make a prediction with Yahoo Finance</string>
     <string name="View_my_past_predictions">View my prediction profile</string>
     <string name="View_my_predictions">View upcoming predictions</string>
     <string name="Logout">Logout</string>
@@ -38,4 +39,12 @@
     <string name="Due_date">"Due: "</string>
     <string name="date_format">yyyy-MM-DD</string>
     <string name="title_activity_open_external_link">OpenExternalLink</string>
+    <string name="title_activity_create_yahoo_finance_prediction">CreateYahooFinancePrediction
+    </string>
+
+
+    <string name="Yahoo_text_tooltip">What currency ratio do you want to predict?</string>
+    <string name="Yahoo_currency_button">Pick currency</string>
+    <string name="Yahoo_direction">More or less?</string>
+    <string name="Yahoo_value">Value</string>
 </resources>

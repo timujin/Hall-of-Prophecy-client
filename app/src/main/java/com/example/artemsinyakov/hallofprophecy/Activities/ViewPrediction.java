@@ -38,6 +38,8 @@ public class ViewPrediction extends AppCompatActivity {
     private String result;
     private String name;
 
+    private String type;
+
     private String[] wagerNames;
     private boolean[] wagerValues;
 
@@ -52,38 +54,65 @@ public class ViewPrediction extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_prediction);
-
         Intent intent = getIntent();
         if (intent.getAction() != null && intent.getAction().equals("android.intent.action.VIEW")) {
             Log.e("1", intent.getAction());
             Log.e("1", intent.getData().toString());
             url = intent.getData().getLastPathSegment();
+            // TODO: make Yahoo predictions shareable
         } else {
             url = intent.getStringExtra("url");
         }
-
-        final Activity activity = this;
-        HoPRequestHelper.get("/prediction/twitter/" + url, null, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                JSONObject json;
-                try {
-                    json = new JSONObject(new String(responseBody));
-                    displayPrediction(json);
-                    parseWagersComments(json);
-                    setUpButtons();
-                } catch (JSONException e) {
-                    Log.e("e", e.toString());
-                    Toast.makeText(activity, "Could not display prediction - JSON does not parse", Toast.LENGTH_LONG).show();
+        if (url.startsWith("yahooFinance/")) {
+            type = "yahooFinance";
+            setContentView(R.layout.activitiy_view_prediction_yahoo);
+            final Activity activity = this;
+            HoPRequestHelper.get("/prediction/" + url, null, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    JSONObject json;
+                    try {
+                        json = new JSONObject(new String(responseBody));
+                        displayPredictionYahoo(json);
+                        parseWagersYahoo(json);
+                        setUpButtonsYahoo();
+                    } catch (JSONException e) {
+                        Log.e("e", e.toString());
+                        Toast.makeText(activity, "Could not display prediction - JSON does not parse", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(activity, "Could not display prediction - network failure", Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Toast.makeText(activity, "Could not display prediction - network failure", Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            type = "twitter";
+            setContentView(R.layout.activity_view_prediction);
+            final Activity activity = this;
+            HoPRequestHelper.get("/prediction/twitter/" + url, null, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    JSONObject json;
+                    try {
+                        json = new JSONObject(new String(responseBody));
+                        displayPrediction(json);
+                        parseWagersComments(json);
+                        setUpButtons();
+                    } catch (JSONException e) {
+                        Log.e("e", e.toString());
+                        Toast.makeText(activity, "Could not display prediction - JSON does not parse", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Toast.makeText(activity, "Could not display prediction - network failure", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
     }
 
     @Override
@@ -97,7 +126,11 @@ public class ViewPrediction extends AppCompatActivity {
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Prediction: ");
-                String shareMessage = context.getResources().getString(R.string.site) + "/prediction/twitter/" + url;
+                String shareMessage;
+                if (type.equals("twitter"))
+                    shareMessage = context.getResources().getString(R.string.site) + "/prediction/twitter/" + url;
+                else
+                    shareMessage = context.getResources().getString(R.string.site) + "/prediction/" + url;
                 shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
                         shareMessage);
                 startActivity(Intent.createChooser(shareIntent,
@@ -106,6 +139,10 @@ public class ViewPrediction extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void displayPredictionYahoo(JSONObject json) throws JSONException {
+        ((TextView)findViewById(R.id.infobox)).setText(json.toString());
     }
 
     private void displayPrediction(JSONObject json) throws JSONException {
@@ -138,6 +175,9 @@ public class ViewPrediction extends AppCompatActivity {
         ((TextView)findViewById(R.id.result)).setText(getResources().getString(R.string.Status)  + result);
     }
 
+    private void parseWagersYahoo(JSONObject json) throws JSONException {
+
+    }
     private void parseWagersComments(JSONObject json) throws JSONException {
         ArrayList<String> wnames = new ArrayList<String>();
         ArrayList<Boolean> wvalues = new ArrayList<Boolean>();
@@ -167,6 +207,10 @@ public class ViewPrediction extends AppCompatActivity {
         }
         this.commentNames = wnames.toArray(new String[0]);
         this.commentTexts = ctexts.toArray(new String[0]);
+    }
+
+    private void setUpButtonsYahoo() {
+
     }
 
     private void setUpButtons() {

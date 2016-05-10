@@ -36,16 +36,7 @@
             android:label="@string/title_activity_create_twitter_prediction"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.ViewPrediction">
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="http" />
-            <data android:scheme="https" />
-            <data android:host="hallofprophecy.xyz" />
-            <data android:pathPattern="/prediction/.*" />
-        </intent-filter>
-            >
+
         </activity>
         <activity
             android:name=".Activities.UserProfile"
@@ -58,6 +49,23 @@
         <service
             android:name=".Activities.LinkHandler"
             android:exported="false" />
+
+        <activity
+            android:name=".Activities.CreateYahooFinancePrediction"
+            android:label="@string/title_activity_create_yahoo_finance_prediction"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.DisplayGenericPrediction">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="hallofprophecy.xyz" />
+                <data android:pathPattern="/prediction/.*" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

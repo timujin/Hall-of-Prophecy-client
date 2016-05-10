@@ -38,11 +38,18 @@
         android:text="@string/Add_twitter_prediction"
         android:layout_below="@id/banner"/>
     <Button
+        android:id="@+id/add_yahoo_finance_prediction"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:text="@string/Add_yahoo_finance_prediction"
+        android:layout_below="@id/add_twitter_prediction"/>
+    <Button
         android:id="@+id/profile"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:layout_below="@+id/add_twitter_prediction"
+        android:layout_below="@+id/add_yahoo_finance_prediction"
         android:text="@string/View_my_past_predictions"/>
 
     <Button

@@ -79,11 +79,12 @@ public class UserProfile extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 JSONObject json;
                 try {
+                    Log.e("2", new String(responseBody));
                     json = new JSONObject(new String(responseBody));
                     parseList(json);
                 } catch (JSONException e) {
                     Log.e("e", e.toString());
-                    Toast.makeText(th, "Could not display profile", Toast.LENGTH_LONG).show();
+                    Toast.makeText(th, "Could NOT display profile", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -95,10 +96,12 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void parseList(JSONObject json) throws JSONException {
-        JSONArray predictions = json.getJSONArray("predictions");
+        JSONObject predictions = json.getJSONObject("predictions");
+        Log.e("1", predictions.toString());
+        JSONArray twitter = predictions.getJSONArray("twitter");
         ArrayList<JSONObject> predictionsArray = new ArrayList<>();
-        for (int i = 0; i<predictions.length(); i++) {
-            JSONObject obj = predictions.getJSONObject(i);
+        for (int i = 0; i<twitter.length(); i++) {
+            JSONObject obj = twitter.getJSONObject(i);
             predictionsArray.add(obj);
         }
         Collections.sort(predictionsArray, new predictionsComparator());

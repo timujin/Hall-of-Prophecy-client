@@ -9,52 +9,46 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".Activities.CreateTwitterPrediction"
-    tools:showIn="@layout/activity_create_twitter_prediction">
-
-
+    tools:context="com.example.artemsinyakov.hallofprophecy.Activities.CreateYahooFinancePrediction"
+    tools:showIn="@layout/activity_create_yahoo_finance_prediction">
 
     <TextView
         android:id="@+id/prediction_tooltip"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Prediction_text_tooltip"
+        android:text="@string/Yahoo_text_tooltip"
         android:textIsSelectable="false"
         style="@style/QText"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         />
 
-    <EditText android:id="@+id/prediction_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:maxLength="130"
-        android:hint="@string/Prediction_text_hint"
-        android:layout_below="@id/prediction_tooltip"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
-    <TextView
-        android:id="@+id/arbiter_tooltip"
+    <Button
+        android:id="@+id/currencies_picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/prediction_text"
-        android:text="@string/Arbiter_tooltip"
-        android:textIsSelectable="false"
-        style="@style/QText"
-        />
+        android:text="@string/Yahoo_currency_button"
+        android:layout_below="@id/prediction_tooltip"/>
 
-    <EditText android:id="@+id/arbiter"
+    <Button
+        android:id="@+id/direction_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Yahoo_direction"
+        android:layout_below="@id/currencies_picker"/>
+
+    <EditText android:id="@+id/value_picker"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/arbiter_tooltip"
+        android:layout_below="@+id/direction_picker"
         android:maxLength="16"
-        android:inputType="text"
-        android:text="@string/At_sign"/>
+        android:inputType="numberDecimal"
+        android:hint="@string/Yahoo_value"/>
 
     <TextView
         android:id="@+id/date_tooltip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/arbiter"
+        android:layout_below="@+id/value_picker"
         android:text="@string/Pick_a_date"
         android:textIsSelectable="false"
         style="@style/QText"

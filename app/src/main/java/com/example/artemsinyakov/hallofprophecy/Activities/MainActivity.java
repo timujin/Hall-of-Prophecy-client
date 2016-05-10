@@ -76,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.add_yahoo_finance_prediction).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateYahooFinancePrediction.class);
+                startActivity(intent);
+            }
+        });
+
         findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
