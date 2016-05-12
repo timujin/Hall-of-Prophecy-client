@@ -85,7 +85,7 @@ public class CreateTwitterPrediction extends AppCompatActivity {
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
+        datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
         datePickerConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

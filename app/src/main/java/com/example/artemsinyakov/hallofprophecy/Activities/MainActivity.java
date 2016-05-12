@@ -25,6 +25,10 @@ import io.fabric.sdk.android.Fabric;
 
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
+//import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.SeriesOfPopups;
+import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.PickAPredictionDialog;
+import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.SeriesOfPopups;
+import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.SoPPActivity;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
@@ -71,8 +75,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.add_twitter_prediction).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateTwitterPrediction.class);
-                startActivity(intent);
+                //Intent intent = new Intent(MainActivity.this, CreateTwitterPrediction.class);
+                //startActivity(intent);
+                PickAPredictionDialog.showPredictionDialog(context);
             }
         });
 
@@ -112,9 +117,11 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.upcoming).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                /*Intent intent = new Intent(MainActivity.this, UserProfile.class);
                 intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
                 intent.putExtra("api", "/user/onlyundecided/");
+                startActivity(intent);*/
+                Intent intent = new Intent(MainActivity.this, SoPPActivity.class);
                 startActivity(intent);
             }
         });

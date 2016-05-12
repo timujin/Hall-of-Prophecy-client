@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -46,9 +47,11 @@ public class DisplayGenericPrediction extends AppCompatActivity {
         if (intent.getAction() != null && intent.getAction().equals("android.intent.action.VIEW")) {
             Log.e("1", intent.getAction());
             Log.e("1", intent.getData().toString());
-            ArrayList<String> path = (ArrayList<String>)(intent.getData().getPathSegments());
+            ArrayList<String> path = (new ArrayList<String>(Arrays.asList(intent.getData().getPath().split("/"))));
+            Log.e("1", path.toString());
             url = path.get(path.size()-1);
             type = path.get(path.size()-2);
+            Log.e("dsf", type+url);
         } else {
             url = intent.getStringExtra("url");
             type = intent.getStringExtra("type");

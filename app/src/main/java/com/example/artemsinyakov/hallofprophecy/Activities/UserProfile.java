@@ -59,7 +59,7 @@ public class UserProfile extends AppCompatActivity {
                                     int position, long id) {
                 try {
                     JSONObject obj = (JSONObject) parent.getItemAtPosition(position);
-                    Intent intent = new Intent(UserProfile.this, ViewPrediction.class);
+                    Intent intent = new Intent(UserProfile.this, DisplayGenericPrediction.class);
                     intent.putExtra("url", obj.getString("url"));
                     startActivity(intent);
                 } catch (JSONException e) {
@@ -96,35 +96,21 @@ public class UserProfile extends AppCompatActivity {
     }
 
     private void parseList(JSONObject json) throws JSONException {
-        JSONObject predictions = json.getJSONObject("predictions");
-        Log.e("1", predictions.toString());
-        JSONArray twitter = predictions.getJSONArray("twitter");
-        ArrayList<JSONObject> predictionsArray = new ArrayList<>();
-        for (int i = 0; i<twitter.length(); i++) {
-            JSONObject obj = twitter.getJSONObject(i);
-            predictionsArray.add(obj);
+        JSONObject predictionJSONs = json.getJSONObject("predictions");
+        JSONArray twitterJSONs = predictionJSONs.getJSONArray("twitter");
+        ArrayList<PredictionProcessor> predictionsArray = new ArrayList<>();
+        for (int i = 0; i<twitterJSONs.length(); i++) {
+            JSONObject obj = twitterJSONs.getJSONObject(i);
+            predictionsArray.add(new PredictionProcessor("twitter",obj,this));
         }
-        Collections.sort(predictionsArray, new predictionsComparator());
-        ArrayAdapter adapter = new ProfilePredictionListAdapter(this, predictionsArray.toArray(new JSONObject[0]));
+        JSONArray yahooJSONs = predictionJSONs.getJSONArray("yahooFinance");
+        for (int i = 0; i<yahooJSONs.length(); i++) {
+            JSONObject obj = yahooJSONs.getJSONObject(i);
+            predictionsArray.add(new PredictionProcessor("yahooFinance",obj,this));
+        }
+        Collections.sort(predictionsArray, new PredictionProcessor.predictionsComparator());
+        ArrayAdapter adapter = new GenericPredictionListAdapter(this, predictionsArray.toArray(new PredictionProcessor[0]));
         listView.setAdapter(adapter);
     }
 
-    private class predictionsComparator implements Comparator<JSONObject> {
-        @Override
-        public int compare(JSONObject obj1, JSONObject obj2) {
-            try {
-                Date date1 = new java.util.Date(obj1.getLong("dueDate") * 1000);
-                Date date2 = new java.util.Date(obj2.getLong("dueDate") * 1000);
-                if (date1.after(date2)) {
-                    return 1;
-                } else if (date2.after(date1)) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            } catch (JSONException e) {
-                return 0;
-            }
-        }
-    }
 }
