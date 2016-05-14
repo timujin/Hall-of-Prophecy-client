@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.artemsinyakov.hallofprophecy.Activities.CreateTwitterPrediction;
 import com.example.artemsinyakov.hallofprophecy.Activities.DisplayGenericPrediction;
+import com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew.ViewGenericPrediction;
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -31,13 +33,17 @@ public class SoPPActivity extends AppCompatActivity {
     private int dialogNum = 0;
     ArrayList<AlertDialog> dialogs;
 
+    boolean dialogsConstructed = false;
+    boolean extraDataLoaded = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_series_of_popups);
         Intent intent = getIntent();
         type = intent.getStringExtra("type");
-
+        Log.e("SOPP", type);
+        final SoPPActivity context = this;
         s = PickAPredictionDialog.constructSeriesOfPopups(type, this, new INextPopupPlease() {
                 @Override
                 public void releasePopup() {
@@ -52,10 +58,22 @@ public class SoPPActivity extends AppCompatActivity {
                         }
                     }, 500);
                 }
+                public void startRolling() {
+                    extraDataLoaded = true;
+                    if (dialogsConstructed)
+                        context.startRolling();
+                }
         });
 
+        dialogsConstructed = true;
+        if (extraDataLoaded) {
+            startRolling();
+        }
+    }
+
+    private void startRolling() {
         dialogs = s.getDialogs();
-        //callUponDialog();
+        callUponDialog();
     }
 
     private void callUponDialog() {

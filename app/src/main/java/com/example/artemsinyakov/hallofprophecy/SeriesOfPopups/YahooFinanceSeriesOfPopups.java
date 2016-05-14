@@ -28,9 +28,6 @@ import java.util.Calendar;
 
 import cz.msebera.android.httpclient.Header;
 
-/**
- * Created by newti on 5/12/2016.
- */
 public class YahooFinanceSeriesOfPopups implements SeriesOfPopups  {
 
     private Context context;
@@ -84,7 +81,7 @@ public class YahooFinanceSeriesOfPopups implements SeriesOfPopups  {
         dialogs.add(constructMoreLessDialog());
         dialogs.add(constructValueDialog());
         dialogs.add(constructDatePickerDialog());
-        cb.releasePopup();
+        cb.startRolling();
     }
 
     private AlertDialog constructCurrenciesPickerDialog() {

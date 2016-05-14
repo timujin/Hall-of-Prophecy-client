@@ -7,5 +7,6 @@ public interface INextPopupPlease {
 
     void releasePopup();
     void popupFailure();
+    void startRolling();
     //public void noMorePopups();
 }

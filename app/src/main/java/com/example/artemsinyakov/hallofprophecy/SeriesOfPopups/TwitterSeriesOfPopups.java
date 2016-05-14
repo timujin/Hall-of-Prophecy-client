@@ -9,6 +9,7 @@ import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -40,13 +41,14 @@ public class TwitterSeriesOfPopups implements SeriesOfPopups {
         this.context = context;
         this.cb = cb;
         setUpDialogs();
-        cb.releasePopup();
+        cb.startRolling();
     }
 
     private void setUpDialogs() {
         dialogs.add(constructPredictionTextPrompt());
         dialogs.add(constructArbiterHandlePrompt());
         dialogs.add(constructDatePickerDialog());
+        Log.e("DIALOGS", String.valueOf(dialogs.size()));
     }
 
     private AlertDialog constructPredictionTextPrompt() {
@@ -137,6 +139,7 @@ public class TwitterSeriesOfPopups implements SeriesOfPopups {
     }
 
     public ArrayList<AlertDialog> getDialogs() {
+        Log.e("GETDIALOGS",  String.valueOf(dialogs.size()));
         return dialogs;
     }
 

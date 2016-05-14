@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class HoPRequestHelper {
-    private static final String BASE_URL = "http://hallofprophecy.xyz:8080";
+    private static final String BASE_URL = "https://hallofprophecy.xyz";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void setUp() {
@@ -22,6 +22,7 @@ public class HoPRequestHelper {
     }
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        Log.e("CLIENT", getAbsoluteUrl(url));
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 

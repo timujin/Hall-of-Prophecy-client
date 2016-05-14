@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew.ViewGenericPrediction">
+
+
+    <TextView
+        android:id="@+id/type_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/fab_margin"/>
+
+    <TextView
+        android:id="@+id/due_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/fab_margin"/>
+
+    <TextView
+        android:id="@+id/main_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/type_text"
+        android:layout_margin="@dimen/fab_margin"/>
+
+    <TextView
+        android:id="@+id/judgement_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_text"
+        android:layout_margin="@dimen/fab_margin"/>
+
+    <ListView
+        android:id="@+id/wagers_list"
+        android:layout_below="@+id/judgement_text"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+
+    <ListView
+        android:id="@+id/comments_list"
+        android:layout_below="@+id/judgement_text"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/make_wager"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Make a wager"/>
+        <Button
+            android:id="@+id/make_comment"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Make a comment"/>
+    </LinearLayout>
+
+</RelativeLayout>
