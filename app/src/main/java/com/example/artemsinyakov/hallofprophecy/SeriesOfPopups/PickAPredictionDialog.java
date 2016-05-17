@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,7 +43,12 @@ public class PickAPredictionDialog {
                 return new TwitterSeriesOfPopups(c, i);
             case "yahooFinance":
                 return new YahooFinanceSeriesOfPopups(c, i);
+            case "twitter_wager":
+                return new TwitterWagerSeriesOfPopups(c, i);
+            case "yahooFinance_wager":
+                return new YahooFinanceWagerSeriesOfPopups(c, i);
             default:
+                Log.e("CREATESERIES", "FAILURE");
                 return null;
         }
     }

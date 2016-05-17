@@ -23,6 +23,7 @@ import android.net.Uri;
 import cz.msebera.android.httpclient.Header;
 import io.fabric.sdk.android.Fabric;
 
+import com.example.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity;
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
 //import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.SeriesOfPopups;
@@ -107,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.profile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, UserProfile.class);
+                Intent intent = new Intent(MainActivity.this, GPVActivity.class);
                 intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
-                intent.putExtra("api", "/user/withwagers/");
+                //intent.putExtra("api", "/user/withwagers/");
                 startActivity(intent);
             }
         });

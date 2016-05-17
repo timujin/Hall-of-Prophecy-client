@@ -120,7 +120,7 @@ public class SoPPActivity extends AppCompatActivity {
 
     private void predictionSuccess(String url) {
         Toast.makeText(this, "Prediction created!", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(SoPPActivity.this, DisplayGenericPrediction.class);
+        Intent intent = new Intent(SoPPActivity.this, ViewGenericPrediction.class);
         intent.putExtra("url", url);
         intent.putExtra("type", type);
         startActivity(intent);

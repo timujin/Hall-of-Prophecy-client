@@ -31,6 +31,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/type_text"
+        android:gravity="center"
+        android:textStyle="bold"
         android:layout_margin="@dimen/fab_margin"/>
 
     <TextView
@@ -39,6 +41,23 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_text"
         android:layout_margin="@dimen/fab_margin"/>
+
+    <View
+        android:id="@+id/delimeter"
+        android:layout_below="@+id/judgement_text"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/delimeter"
+        android:id="@+id/swap_wagers_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Comments"/>
+
 
     <ListView
         android:id="@+id/wagers_list"

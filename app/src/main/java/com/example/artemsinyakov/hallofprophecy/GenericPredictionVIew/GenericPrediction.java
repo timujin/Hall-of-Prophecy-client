@@ -1,6 +1,7 @@
 package com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.artemsinyakov.hallofprophecy.R;
 
@@ -23,6 +24,7 @@ public abstract class GenericPrediction {
 
 
     protected GenericPrediction(JSONObject json, Context context) {
+        Log.e("GENERICPREDICTION", json.toString());
         this.json = json;
         this.context = context;
     }
@@ -30,7 +32,18 @@ public abstract class GenericPrediction {
     abstract public String getType();
     abstract public String getTypeVerbose();
     abstract public String getDescription();
+    public String getDescriptionBrief() {
+        return getDescription();
+    }
     abstract public String getJudgement();
+
+    public String getURL() {
+        try {
+            return json.getString("url");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
 
     public String getDueDate() {
         try {
@@ -40,12 +53,33 @@ public abstract class GenericPrediction {
             if (date.before(Calendar.getInstance())) {
                 return "Due at " +
                         new SimpleDateFormat(context.getResources().getString(R.string.date_format))
-                                .format(date);
+                                .format(new java.util.Date(datel));
             } else {
                 return "Settled at " +
                         new SimpleDateFormat(context.getResources().getString(R.string.date_format))
-                                .format(date);
+                                .format(new java.util.Date(datel));
             }
+        } catch (JSONException e) {
+            return "Error";
+        }
+    }
+
+    public String getWagerAuthorAt(int index) {
+        try {
+            if (wagers == null) {
+                wagers = json.getJSONArray("wagers");
+            }
+            return wagers.getJSONObject(index).getString("handle");
+        } catch (JSONException e) {
+            return "Error";
+        }
+    }
+    public String getCommentAuthorAt(int index) {
+        try {
+            if (comments == null) {
+                comments = json.getJSONArray("comments");
+            }
+            return comments.getJSONObject(index).getString("handle");
         } catch (JSONException e) {
             return "Error";
         }
@@ -127,9 +161,15 @@ public abstract class GenericPrediction {
         switch (type){
             case "twitter":
                 return new TwitterPrediction(json, context);
+            case "yahooFinance":
+                return new YahooPrediction(json, context);
             default:
                 return null;
         }
+    }
+
+    static public String[] getPredictionTypes() {
+        return new String[]{"twitter","yahooFinance"};
     }
 
 

@@ -36,6 +36,7 @@
         <activity
             android:name=".Activities.CreateTwitterPrediction"
             android:label="@string/title_activity_create_twitter_prediction"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.ViewPrediction"
@@ -57,6 +58,7 @@
 
         <service
             android:name=".Activities.LinkHandler"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
@@ -66,6 +68,18 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.DisplayGenericPrediction"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SeriesOfPopups.SeriesOfPopupsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SeriesOfPopups.SoPPActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".GenericPredictionVIew.GenericPredictionProfile"
+
+            android:screenOrientation="portrait"/>
+        <activity android:name=".GenericPredictionVIew.ViewGenericPrediction"
+
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -79,14 +93,9 @@
                 <data android:pathPattern="/prediction/.*" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SeriesOfPopups.SeriesOfPopupsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SeriesOfPopups.SoPPActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".GenericPredictionVIew.GenericPredictionProfile" />
-        <activity android:name=".GenericPredictionVIew.ViewGenericPrediction"></activity>
+        <activity android:name=".GenericProfileView.GPVActivity"
+
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -13,8 +13,8 @@ import java.util.Calendar;
 
 public class TwitterPrediction extends GenericPrediction {
 
-    public JSONObject json;
-    public Context context;
+    //public JSONObject json;
+    //public Context context;
 
     public TwitterPrediction(JSONObject json, Context context) {
         super(json, context);
@@ -38,6 +38,17 @@ public class TwitterPrediction extends GenericPrediction {
             return "Error";
         }
     }
+
+    @Override
+    public String getDescriptionBrief() {
+        try {
+            String predictionText = json.getString("text");
+            return predictionText.substring(0, Math.min(predictionText.length(), 40));
+        } catch (JSONException e) {
+            return "Error";
+        }
+    }
+
     public String getJudgement() {
         String res;
         try {
@@ -46,10 +57,13 @@ public class TwitterPrediction extends GenericPrediction {
             return "Not decided yet.";
         }
         if (res != null)
-            if (res.equals("1")) {
-                return "Judged to be true!";
-            } else {
-                return "Judged to be false!";
+            switch (res) {
+                case "1":
+                    return "Judged true!";
+                case "-1":
+                    return "Judged false!";
+                default:
+                    return "Not decided yet.";
             }
         else {
             return "Not decided yet.";
