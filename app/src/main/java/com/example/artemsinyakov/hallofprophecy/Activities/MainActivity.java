@@ -1,12 +1,17 @@
 package com.example.artemsinyakov.hallofprophecy.Activities;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -23,6 +28,7 @@ import android.net.Uri;
 import cz.msebera.android.httpclient.Header;
 import io.fabric.sdk.android.Fabric;
 
+import com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew.ViewGenericPrediction;
 import com.example.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity;
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Activity context = this;
 
-        findViewById(R.id.add_twitter_prediction).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.add_prediction).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Intent intent = new Intent(MainActivity.this, CreateTwitterPrediction.class);
@@ -82,13 +88,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.add_yahoo_finance_prediction).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.add_yahoo_finance_prediction).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateYahooFinancePrediction.class);
-                startActivity(intent);
+
             }
-        });
+        });*/
 
         findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,17 +120,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.upcoming).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.upcoming).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /*Intent intent = new Intent(MainActivity.this, UserProfile.class);
                 intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
                 intent.putExtra("api", "/user/onlyundecided/");
-                startActivity(intent);*/
+                startActivity(intent);
                 Intent intent = new Intent(MainActivity.this, SoPPActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
@@ -151,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void loadUsersBannerAvatar() {
-        Display display = getWindowManager().getDefaultDisplay();
+        /*Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         screenWidth = size.x;
@@ -198,6 +203,6 @@ public class MainActivity extends AppCompatActivity {
                     public void failure(TwitterException exception) {
                         Log.d("twittercommunity", "exception is " + exception);
                     }
-                });
+                });*/
     }
 }

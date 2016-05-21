@@ -1,5 +1,6 @@
 package com.example.artemsinyakov.hallofprophecy.SeriesOfPopups;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,7 +38,7 @@ public class PickAPredictionDialog {
         context.startActivity(intent);
     }
 
-    public static SeriesOfPopups constructSeriesOfPopups(String type, Context c, INextPopupPlease i) {
+    public static SeriesOfPopups constructSeriesOfPopups(String type, Activity c, INextPopupPlease i) {
         switch (type) {
             case "twitter":
                 return new TwitterSeriesOfPopups(c, i);

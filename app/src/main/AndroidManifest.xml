@@ -3,6 +3,7 @@
     package="com.example.artemsinyakov.hallofprophecy">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.example.artemsinyakov.hallofprophecy.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -10,6 +11,35 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.example.artemsinyakov.hallofprophecy" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".GCMServices.MyGcmListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".GCMServices.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".GCMServices.RegistrationIntentService"
+            android:exported="false" />
+
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/app_name"
@@ -58,8 +88,8 @@
 
         <service
             android:name=".Activities.LinkHandler"
-            android:screenOrientation="portrait"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".Activities.CreateYahooFinancePrediction"
@@ -74,12 +104,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SeriesOfPopups.SoPPActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GenericPredictionVIew.GenericPredictionProfile"
             android:screenOrientation="portrait" />
-        <activity android:name=".GenericPredictionVIew.GenericPredictionProfile"
-
-            android:screenOrientation="portrait"/>
-        <activity android:name=".GenericPredictionVIew.ViewGenericPrediction"
-
+        <activity
+            android:name=".GenericPredictionVIew.ViewGenericPrediction"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -93,9 +124,30 @@
                 <data android:pathPattern="/prediction/.*" />
             </intent-filter>
         </activity>
-        <activity android:name=".GenericProfileView.GPVActivity"
+        <activity
+            android:name=".GenericProfileView.GPVActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-            android:screenOrientation="portrait"></activity>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="hallofprophecy.xyz" />
+                <data android:pathPattern="/user/.*" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".GCMServices.RegistrationIntentService"
+            android:exported="false" />
+
+        <activity
+            android:name=".Activities.ExampleActivity"
+            android:label="@string/title_activity_example"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

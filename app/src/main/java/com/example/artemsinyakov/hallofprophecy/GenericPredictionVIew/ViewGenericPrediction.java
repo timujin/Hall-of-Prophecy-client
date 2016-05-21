@@ -137,6 +137,8 @@ public class ViewGenericPrediction extends AppCompatActivity {
         activateButtons(makeWager, makeComment, swapWagersComments);
         activateCreateWagerComment(makeWager, makeComment);
         activateClickOnList(wagersList, commentsList);
+
+        showUI();
     }
 
     private void populateTexts(TextView typeText, TextView dueText, TextView mainText, TextView judgementText) {
@@ -364,5 +366,10 @@ public class ViewGenericPrediction extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showUI(){
+        (findViewById(R.id.progressBar1)).setVisibility(View.GONE);
+        (findViewById(R.id.the_entire_layout)).setVisibility(View.VISIBLE);
     }
 }

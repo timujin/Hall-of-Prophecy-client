@@ -1,5 +1,6 @@
 package com.example.artemsinyakov.hallofprophecy.SeriesOfPopups;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -30,7 +31,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class YahooFinanceSeriesOfPopups implements SeriesOfPopups  {
 
-    private Context context;
+    private Activity context;
     private INextPopupPlease cb;
 
     public ArrayList<AlertDialog> dialogs = new ArrayList<>();
@@ -43,7 +44,7 @@ public class YahooFinanceSeriesOfPopups implements SeriesOfPopups  {
     private String[] currencies;
 
 
-    public YahooFinanceSeriesOfPopups(Context context, INextPopupPlease cb) {
+    public YahooFinanceSeriesOfPopups(Activity context, INextPopupPlease cb) {
         this.context = context;
         this.cb = cb;
         downloadCurrencies();
@@ -72,6 +73,7 @@ public class YahooFinanceSeriesOfPopups implements SeriesOfPopups  {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Toast.makeText(context, "Could not download currencies", Toast.LENGTH_LONG).show();
+                context.finish();
             }
         });
     }

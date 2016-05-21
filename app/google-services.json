@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "833807867723",
+    "project_id": "hall-of-prophecy"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833807867723:android:933f119e0d6281dd",
+        "android_client_info": {
+          "package_name": "com.example.artemsinyakov.hallofprophecy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbpWoJBS2omAxcWlRSl_-UEqcxOeHCRx4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

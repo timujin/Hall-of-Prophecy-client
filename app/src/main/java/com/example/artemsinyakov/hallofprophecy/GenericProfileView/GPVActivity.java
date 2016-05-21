@@ -3,11 +3,16 @@ package com.example.artemsinyakov.hallofprophecy.GenericProfileView;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +26,7 @@ import com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew.GenericPre
 import com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew.ViewGenericPrediction;
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
+import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.PickAPredictionDialog;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONException;
@@ -42,7 +48,6 @@ public class GPVActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gpv);
 
-
         Intent intent = getIntent();
         if (intent.getAction() != null && intent.getAction().equals("android.intent.action.VIEW")) {
             url = intent.getData().getLastPathSegment();
@@ -51,6 +56,30 @@ public class GPVActivity extends AppCompatActivity {
         }
 
         loadProfile();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_view_prediction, menu);
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        final Context context = this;
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"User profile: ");
+                String shareMessage;
+                shareMessage = context.getResources().getString(R.string.site) + "/user/" + url;
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                        shareMessage);
+                startActivity(Intent.createChooser(shareIntent,
+                        "Share user's profile."));
+                return true;
+            }
+        });
+        return true;
     }
 
     private void loadProfile() {
@@ -115,6 +144,8 @@ public class GPVActivity extends AppCompatActivity {
         setUpButtons();
         setUpLists();
         setUpListClicks();
+        showUI();
+        setUpFAB();
     }
 
     private void setUpTitle() {
@@ -178,6 +209,27 @@ public class GPVActivity extends AppCompatActivity {
                     intent.putExtra("type", predictionType);
                     startActivity(intent);
                 }
+            }
+        });
+    }
+
+
+    private void showUI(){
+        (findViewById(R.id.progressBar1)).setVisibility(View.GONE);
+        (findViewById(R.id.the_entire_layout)).setVisibility(View.VISIBLE);
+    }
+
+    private void setUpFAB() {
+        final Context context = this;
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    PickAPredictionDialog.showPredictionDialog(context);
+                    return true;
+                }
+                return true; // consume the event
             }
         });
     }

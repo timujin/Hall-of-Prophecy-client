@@ -13,60 +13,38 @@
     tools:showIn="@layout/activity_main">
 
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/banner"
-        android:contentDescription="@string/User_banner"
-        android:src="@drawable/default_banner"
-        android:scaleType="fitXY"/>
+    <Button
+        android:id="@+id/add_prediction"
+        android:layout_width="180dp"
+        android:layout_height="320dp"
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/avatar"
-        android:contentDescription="@string/User_banner"
-        android:scaleType="fitXY"
-        android:layout_below="@id/banner"
-        android:layout_marginTop="-20dp"/>
+        android:background="@drawable/button_placehlder"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        />
 
-    <Button
-        android:id="@+id/add_twitter_prediction"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/button_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:text="@string/Add_twitter_prediction"
-        android:layout_below="@id/banner"/>
-    <Button
-        android:id="@+id/add_yahoo_finance_prediction"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:text="@string/Add_yahoo_finance_prediction"
-        android:layout_below="@id/add_twitter_prediction"/>
-    <Button
-        android:id="@+id/profile"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_below="@+id/add_yahoo_finance_prediction"
-        android:text="@string/View_my_past_predictions"/>
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
-    <Button
-        android:id="@+id/upcoming"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:text="@string/View_my_predictions"
-        android:layout_below="@id/profile"/>
+        <Button
+            android:id="@+id/profile"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/View_my_past_predictions"/>
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_alignParentBottom="true"
-        android:text="@string/Logout"/>
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/logout"
+            android:text="@string/Logout"/>
+
+    </LinearLayout>
+
 
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
+import com.example.artemsinyakov.hallofprophecy.GCMServices.RegistrationIntentService;
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -96,6 +97,10 @@ public class TwitterLogin extends AppCompatActivity {
     }
 
     public void authSuccess() {
+        ///////////////
+        Intent registerService = new Intent(TwitterLogin.this, RegistrationIntentService.class);
+        startService(registerService);
+        //////////////
         Intent main = new Intent(TwitterLogin.this, MainActivity.class);
         startActivity(main);
         finish();
