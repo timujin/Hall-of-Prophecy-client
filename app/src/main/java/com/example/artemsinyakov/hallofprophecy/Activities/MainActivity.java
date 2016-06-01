@@ -144,7 +144,16 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else {
             loadUsersBannerAvatar();
+            loadUserProfile();
         }
+    }
+
+    private void loadUserProfile() {
+        Intent intent = new Intent(MainActivity.this, GPVActivity.class);
+        intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
+        //intent.putExtra("api", "/user/withwagers/");
+        startActivity(intent);
+        finish();
     }
 
     @Override

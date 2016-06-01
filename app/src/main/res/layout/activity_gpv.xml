@@ -93,13 +93,15 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="All predictions"
-                    android:shadowColor="@color/colorPrimary"/>
+                    android:shadowColor="@color/colorPrimary"
+                    android:theme="@style/HoPButton"/>
                 <Button
                     android:id="@+id/show_upcoming"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="Upcoming only"/>
+                    android:text="Upcoming only"
+                    android:theme="@style/HoPButton"/>
             </LinearLayout>
 
             <ListView
@@ -123,7 +125,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:tint="@color/tw__solid_white"
+        android:src="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>
 

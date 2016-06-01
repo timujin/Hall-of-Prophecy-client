@@ -82,12 +82,12 @@ public class RegistrationIntentService extends IntentService {
         Log.e("TOKEN", token);
         JSONObject json = new JSONObject();
         try {
-            json.put("regtoken", token);
+            json.put("regid", token);
             json.put("key", Twitter.getInstance().core.getSessionManager().getActiveSession().getAuthToken().token);
         } catch (JSONException e) {
             // pass
         }
-        HoPRequestHelper.post(this, "/register/token/", json, new AsyncHttpResponseHandler() {
+        HoPRequestHelper.post(this, "/register/token", json, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.e("TOKEN", "SUCCESS");

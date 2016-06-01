@@ -43,9 +43,10 @@ public class YahooPrediction extends GenericPrediction {
     public String getJudgement() {
         try {
             String res = json.getString("result");
+            String bid =  json.getString("judgementBid");
             if (res == null || res.equals("null"))
                 return "Not decided yet";
-            return "Actual value: " + res;
+            return "Actual value: " + bid;
         } catch (JSONException e) {
             return "Not decided yet.";
         }

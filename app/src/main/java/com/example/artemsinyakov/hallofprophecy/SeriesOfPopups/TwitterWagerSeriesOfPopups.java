@@ -53,7 +53,7 @@ public class TwitterWagerSeriesOfPopups implements SeriesOfPopups {
                 cb.releasePopup();
             }
         });
-        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setCancelable(true);
         return alertDialogBuilder.create();
     }
 

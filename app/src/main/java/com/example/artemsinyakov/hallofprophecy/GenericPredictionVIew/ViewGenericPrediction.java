@@ -69,13 +69,17 @@ public class ViewGenericPrediction extends AppCompatActivity {
             type = intent.getStringExtra("type");
         }
 
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Prediction");
+
         downloadPrediction();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_view_prediction, menu);
+        getMenuInflater().inflate(R.menu.menu_no_logout, menu);
         MenuItem item = menu.findItem(R.id.menu_item_share);
         final Context context = this;
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -94,6 +98,20 @@ public class ViewGenericPrediction extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            Intent intent = new Intent(ViewGenericPrediction.this, GPVActivity.class);
+            intent.putExtra("url", Twitter.getSessionManager().getActiveSession().getUserName());
+            startActivity(intent);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void downloadPrediction() {
@@ -161,7 +179,7 @@ public class ViewGenericPrediction extends AppCompatActivity {
             swapWagersComments.setVisibility(View.GONE);
         } else {
             swapWagersComments.setVisibility(View.VISIBLE);
-            swapWagersComments.setText("Wagers");
+            swapWagersComments.setText("Comments");
             swapWagersComments.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -176,12 +194,12 @@ public class ViewGenericPrediction extends AppCompatActivity {
     private void swapLists() {
         if (showingComments) {
             showingComments = false;
-            swapWagersComments.setText("Comments");
+            swapWagersComments.setText("Wagers");
             wagersList.setVisibility(View.GONE);
             commentsList.setVisibility(View.VISIBLE);
         } else {
             showingComments = true;
-            swapWagersComments.setText("Wagers");
+            swapWagersComments.setText("Comments");
             wagersList.setVisibility(View.VISIBLE);
             commentsList.setVisibility(View.GONE);
         }
@@ -215,6 +233,9 @@ public class ViewGenericPrediction extends AppCompatActivity {
             }
             @Override
             public void startRolling() {
+
+            }
+            public void cancel() {
 
             }
         });

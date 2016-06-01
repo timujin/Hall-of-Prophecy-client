@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,12 +24,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.artemsinyakov.hallofprophecy.Activities.TwitterLogin;
 import com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew.GenericPrediction;
 import com.example.artemsinyakov.hallofprophecy.GenericPredictionVIew.ViewGenericPrediction;
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
 import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.PickAPredictionDialog;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +43,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import io.fabric.sdk.android.Fabric;
 
 public class GPVActivity extends AppCompatActivity {
 
@@ -54,8 +61,19 @@ public class GPVActivity extends AppCompatActivity {
         } else {
             url = intent.getStringExtra("url");
         }
-
+        getSupportActionBar().setTitle("Your predictions");
         loadProfile();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        TwitterSession twitterSession = Twitter.getSessionManager().getActiveSession();
+        if (twitterSession == null) {
+            Intent login = new Intent(GPVActivity.this, TwitterLogin.class);
+            startActivity(login);
+            finish();
+        }
     }
 
 
@@ -79,6 +97,22 @@ public class GPVActivity extends AppCompatActivity {
                 return true;
             }
         });
+        item = menu.findItem(R.id.menu_item_logout);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                CookieSyncManager.createInstance(context);
+                CookieManager cookieManager = CookieManager.getInstance();
+                cookieManager.removeSessionCookie();
+                Twitter.getSessionManager().clearActiveSession();
+                Twitter.logOut();
+                Intent intent = new Intent(GPVActivity.this, TwitterLogin.class);
+                startActivity(intent);
+                finish();
+                return true;
+            }
+        });
+
         return true;
     }
 

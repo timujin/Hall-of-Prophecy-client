@@ -60,7 +60,7 @@ public class TwitterSeriesOfPopups implements SeriesOfPopups {
         textView.setText("What do you think will happen?");
         final EditText editText = (EditText) promptView.findViewById(R.id.editText);
         editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(130)});
-        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setCancelable(true)
                 .setPositiveButton("OK", null);
         final AlertDialog d = alertDialogBuilder.create();
         d.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -81,6 +81,12 @@ public class TwitterSeriesOfPopups implements SeriesOfPopups {
                 });
             }
         });
+        d.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                cb.cancel();
+            }
+        });
         return d;
     }
     private AlertDialog constructArbiterHandlePrompt() {
@@ -93,7 +99,7 @@ public class TwitterSeriesOfPopups implements SeriesOfPopups {
         final EditText editText = (EditText) promptView.findViewById(R.id.editText);
         editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(30)});
         editText.setText("@");
-        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setCancelable(true)
                 .setPositiveButton("OK", null);
         final AlertDialog d = alertDialogBuilder.create();
         d.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -114,11 +120,23 @@ public class TwitterSeriesOfPopups implements SeriesOfPopups {
                 });
             }
         });
+        d.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                cb.cancel();
+            }
+        });
         return d;
     }
 
     private AlertDialog constructDatePickerDialog() {
         Calendar newCalendar = Calendar.getInstance();
+        int nextMonth = newCalendar.get(Calendar.MONTH);
+        if (nextMonth == Calendar.DECEMBER) {
+            nextMonth = Calendar.JANUARY;
+        } else {
+            nextMonth++;
+        }
         final DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
@@ -128,13 +146,17 @@ public class TwitterSeriesOfPopups implements SeriesOfPopups {
                     cb.popupFailure();
                 } else {
                     unixDate = newDate.getTimeInMillis();
-                    Toast.makeText(context, Long.toString(unixDate), Toast.LENGTH_LONG).show();
                     cb.releasePopup();
                 }
             }
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.setCancelable(false);
+        },newCalendar.get(Calendar.YEAR), nextMonth, newCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+        datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                cb.cancel();
+            }
+        });
         return datePickerDialog;
     }
 

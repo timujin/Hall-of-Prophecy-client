@@ -18,6 +18,7 @@ public class HoPRequestHelper {
         client.setResponseTimeout(5);
         client.setConnectTimeout(5);
         client.setMaxRetriesAndTimeout(5,5);
+        client.setUserAgent("com.example.artemsinyakov.hallofprophecy.0.0.1");
         Log.e("1", "set up");
     }
 

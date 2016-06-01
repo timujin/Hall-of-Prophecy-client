@@ -64,6 +64,9 @@ public class SoPPActivity extends AppCompatActivity {
                     if (dialogsConstructed)
                         context.startRolling();
                 }
+                public void cancel() {
+                    finish();
+                }
         });
 
         dialogsConstructed = true;
@@ -117,6 +120,7 @@ public class SoPPActivity extends AppCompatActivity {
 
     private void predictionFailure() {
         Toast.makeText(this, "Prediction not created.", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void predictionSuccess(String url) {

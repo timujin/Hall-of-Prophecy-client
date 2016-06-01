@@ -11,6 +11,7 @@ import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 
 import com.example.artemsinyakov.hallofprophecy.GCMServices.RegistrationIntentService;
+import com.example.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity;
 import com.example.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.example.artemsinyakov.hallofprophecy.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;

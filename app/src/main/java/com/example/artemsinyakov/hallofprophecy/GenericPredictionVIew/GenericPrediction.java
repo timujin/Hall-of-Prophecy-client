@@ -9,9 +9,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.UndeclaredThrowableException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 public abstract class GenericPrediction {
     public JSONObject json;
@@ -37,6 +39,14 @@ public abstract class GenericPrediction {
     }
     abstract public String getJudgement();
 
+    public boolean getDecided() {
+        try {
+            return json.getString("result") != null && json.getString("result").equals("1");
+        } catch (JSONException e) {
+            return false;
+        }
+    }
+
     public String getURL() {
         try {
             return json.getString("url");
@@ -50,7 +60,7 @@ public abstract class GenericPrediction {
             long datel = json.getLong("dueDate") * 1000;
             Calendar date = Calendar.getInstance();
             date.setTimeInMillis(datel);
-            if (date.before(Calendar.getInstance())) {
+            if (!getDecided()) {
                 return "Due at " +
                         new SimpleDateFormat(context.getResources().getString(R.string.date_format))
                                 .format(new java.util.Date(datel));

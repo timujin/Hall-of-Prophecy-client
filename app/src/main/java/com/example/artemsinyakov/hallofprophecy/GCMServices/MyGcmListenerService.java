@@ -30,7 +30,8 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        sendNotification(message);
+        String link = data.getString("link");
+        sendNotification(message, link);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -40,24 +41,26 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, ViewGenericPrediction.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void sendNotification(String message, String link) {
+        try {
+            Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("Hall of Prophecy Message")
-                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark_disabled)
-                .setContentText(message)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setContentTitle("NostraNet")
+                    .setSmallIcon(R.drawable.icon_notify)
+                    .setContentText(message)
+                    .setAutoCancel(true)
+                    .setSound(defaultSoundUri)
+                    .setContentIntent(contentIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+            notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        }catch (Exception e) {
+            Log.e("NOTIFICATION", e.toString());
+        }
     }
 }

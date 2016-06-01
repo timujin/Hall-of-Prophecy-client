@@ -63,7 +63,7 @@ public class YahooFinanceWagerSeriesOfPopups implements SeriesOfPopups  {
                 cb.releasePopup();
             }
         });
-        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setCancelable(true);
         return alertDialogBuilder.create();
     }
 
@@ -76,7 +76,7 @@ public class YahooFinanceWagerSeriesOfPopups implements SeriesOfPopups  {
         textView.setText("...than what value?");
         final EditText editText = (EditText) promptView.findViewById(R.id.editText);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        alertDialogBuilder.setCancelable(false)
+        alertDialogBuilder.setCancelable(true)
                 .setPositiveButton("OK", null);
         final AlertDialog d = alertDialogBuilder.create();
         d.setOnShowListener(new DialogInterface.OnShowListener() {
