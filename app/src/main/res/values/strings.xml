@@ -49,4 +49,7 @@
     <string name="Yahoo_value">Value</string>
     <string name="title_activity_yahoo_prediction">YahooPrediction</string>
     <string name="title_activity_example">ExampleActivity</string>
+    <string name="title_activity_movie_ratings_create_prediction">
+        MovieRatingsCreatePredictionActivity
+    </string>
 </resources>

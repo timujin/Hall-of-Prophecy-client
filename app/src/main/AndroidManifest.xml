@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.artemsinyakov.hallofprophecy">
+    package="com.archonmode.artemsinyakov.hallofprophecy">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.example.artemsinyakov.hallofprophecy.permission.C2D_MESSAGE" />
@@ -45,7 +45,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -139,7 +138,6 @@
                 <data android:host="hallofprophecy.xyz" />
                 <data android:pathPattern="/user/.*" />
             </intent-filter>
-
         </activity>
 
         <service
@@ -149,6 +147,11 @@
         <activity
             android:name=".Activities.ExampleActivity"
             android:label="@string/title_activity_example"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".GenericCreatePrediction.GenericCreatePredictionActivity" />
+        <activity
+            android:name=".GenericCreatePrediction.MovieRatingsCreatePredictionActivity"
+            android:label="@string/title_activity_movie_ratings_create_prediction"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

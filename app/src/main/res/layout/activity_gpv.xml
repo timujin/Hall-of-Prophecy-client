@@ -9,7 +9,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.example.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity">
+    tools:context="com.archonmode.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity">
 
     ,<!--<android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:paddingTop="0dp"
-        tools:context="com.example.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity">
+        tools:context="com.archonmode.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity">
 
         <ProgressBar
             android:id="@+id/progressBar1"
@@ -53,7 +53,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            tools:context="com.example.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity">
+            tools:context="com.archonmode.artemsinyakov.hallofprophecy.GenericProfileView.GPVActivity">
 
             <LinearLayout
                 android:id="@+id/title_layout"
