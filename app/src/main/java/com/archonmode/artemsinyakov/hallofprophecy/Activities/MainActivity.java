@@ -16,6 +16,7 @@ import com.archonmode.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.archonmode.artemsinyakov.hallofprophecy.R;
 //import com.example.artemsinyakov.hallofprophecy.SeriesOfPopups.SeriesOfPopups;
 import com.archonmode.artemsinyakov.hallofprophecy.SeriesOfPopups.PickAPredictionDialog;
+import com.archonmode.artemsinyakov.hallofprophecy.ThemoviedbRequestHelper;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setUpButtons();
 
         HoPRequestHelper.setUp();
+        ThemoviedbRequestHelper.setUp();
     }
 
     private void setUpButtons() {

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.archonmode.artemsinyakov.hallofprophecy.GenericCreatePrediction.MovieRatings.MovieRatingsCreatePredictionActivity;
+
 public class PickAPredictionDialog {
 
     static public final String[] predictionTypeNames = {"Tweet a prediction",
@@ -21,7 +23,13 @@ public class PickAPredictionDialog {
         builder.setItems(predictionTypeNames, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                openSeriesOfPopups(predictionTypes[which], c);
+                if (which == 2) {
+                    // TODO: remove hardcode
+                    Intent intent = new Intent(c, MovieRatingsCreatePredictionActivity.class);
+                    c.startActivity(intent);
+                } else {
+                    openSeriesOfPopups(predictionTypes[which], c);
+                }
             }
         });
         builder.create().show();

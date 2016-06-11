@@ -9,6 +9,11 @@
         android:actionProviderClass=
             "android.widget.ShareActionProvider" />
     <item
+        android:id="@+id/menu_item_help"
+        app:showAsAction="ifRoom"
+        android:title="Help" />
+
+    <item
         android:id="@+id/menu_item_logout"
         app:showAsAction="ifRoom"
         android:title="Logout" />

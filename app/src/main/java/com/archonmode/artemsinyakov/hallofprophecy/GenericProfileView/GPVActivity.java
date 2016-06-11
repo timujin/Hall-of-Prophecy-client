@@ -2,6 +2,8 @@ package com.archonmode.artemsinyakov.hallofprophecy.GenericProfileView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +27,10 @@ import com.archonmode.artemsinyakov.hallofprophecy.GenericPredictionVIew.ViewGen
 import com.archonmode.artemsinyakov.hallofprophecy.HoPRequestHelper;
 import com.archonmode.artemsinyakov.hallofprophecy.R;
 import com.archonmode.artemsinyakov.hallofprophecy.SeriesOfPopups.PickAPredictionDialog;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.ShowcaseViewApi;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -50,8 +56,9 @@ public class GPVActivity extends AppCompatActivity {
         } else {
             url = intent.getStringExtra("url");
         }
-        getSupportActionBar().setTitle("Your predictions");
+        getSupportActionBar().setTitle("NostraNet");
         loadProfile();
+
     }
 
     @Override
@@ -256,4 +263,5 @@ public class GPVActivity extends AppCompatActivity {
             }
         });
     }
+
 }

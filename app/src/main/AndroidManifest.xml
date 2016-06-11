@@ -150,8 +150,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GenericCreatePrediction.GenericCreatePredictionActivity" />
         <activity
-            android:name=".GenericCreatePrediction.MovieRatingsCreatePredictionActivity"
+            android:name=".GenericCreatePrediction.MovieRatings.MovieRatingsCreatePredictionActivity"
             android:label="@string/title_activity_movie_ratings_create_prediction"
+
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
