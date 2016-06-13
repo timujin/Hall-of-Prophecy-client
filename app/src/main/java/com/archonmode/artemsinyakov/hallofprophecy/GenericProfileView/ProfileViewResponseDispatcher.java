@@ -1,6 +1,7 @@
 package com.archonmode.artemsinyakov.hallofprophecy.GenericProfileView;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.archonmode.artemsinyakov.hallofprophecy.GenericPredictionVIew.GenericPrediction;
 
@@ -45,6 +46,7 @@ public class ProfileViewResponseDispatcher {
                 for (int i=0;i<predictionsOfType.length();i++) {
                     GenericPrediction p = GenericPrediction.GeneratePredictionFromType
                                     (type, predictionsOfType.getJSONObject(i), context);
+                    Log.e("GENERIC", p.getDescriptionBrief());
                     all.add(p);
                 }
             }

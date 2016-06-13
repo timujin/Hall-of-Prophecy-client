@@ -43,12 +43,13 @@ public class ViewGenericPrediction extends AppCompatActivity {
     private String url;
     private String type;
 
-    private GenericPrediction prediction;
+    protected boolean unusualViewsAccountedFor = false;
+
+    protected GenericPrediction prediction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_generic_prediction);
 
         Intent intent = getIntent();
         if (intent.getAction() != null && intent.getAction().equals("android.intent.action.VIEW")) {
@@ -64,6 +65,17 @@ public class ViewGenericPrediction extends AppCompatActivity {
             type = intent.getStringExtra("type");
         }
 
+        Intent unusualViewIntent = unusualPredictionView();
+        if (unusualViewIntent != null && !unusualViewsAccountedFor) {
+            unusualViewIntent.putExtra("url", url);
+            unusualViewIntent.putExtra("type", type);
+            startActivity(unusualViewIntent);
+            finish();
+            return;
+        }
+        if (!unusualViewsAccountedFor)
+            setContentView(R.layout.activity_view_generic_prediction);
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Prediction");
@@ -71,6 +83,14 @@ public class ViewGenericPrediction extends AppCompatActivity {
         downloadPrediction();
     }
 
+    public Intent unusualPredictionView() {
+        switch (type) {
+            case "movieRatings":
+                return new Intent(ViewGenericPrediction.this, ViewMovieRatingsPrediction.class);
+            default:
+                return null;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,7 +154,7 @@ public class ViewGenericPrediction extends AppCompatActivity {
     ListView wagersList;
     ListView commentsList;
     Button   swapWagersComments;
-    private void populateUIElements() {
+    protected void populateUIElements() {
         final TextView typeText = (TextView) findViewById(R.id.type_text);
         final TextView dueText = (TextView) findViewById(R.id.due_text);
         final TextView mainText = (TextView) findViewById(R.id.main_text);

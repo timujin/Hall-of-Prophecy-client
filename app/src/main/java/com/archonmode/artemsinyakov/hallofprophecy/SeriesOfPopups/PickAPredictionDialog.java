@@ -51,6 +51,8 @@ public class PickAPredictionDialog {
                 return new TwitterWagerSeriesOfPopups(c, i);
             case "yahooFinance_wager":
                 return new YahooFinanceWagerSeriesOfPopups(c, i);
+            case "movieRatings_wager":
+                return new MovieRatingsWagerSeriesOfPopups(c, i);
             default:
                 Log.e("CREATESERIES", "FAILURE");
                 return null;

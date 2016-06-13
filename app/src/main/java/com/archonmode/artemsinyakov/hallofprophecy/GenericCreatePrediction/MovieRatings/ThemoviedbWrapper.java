@@ -33,7 +33,6 @@ public class ThemoviedbWrapper {
         if (currentPage > 0 && currentPage == maxPages)
             return null;
         lock = true;
-        Looper.prepare();
         AsyncHttpResponseHandler handler = new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -45,13 +44,15 @@ public class ThemoviedbWrapper {
                     maxPages = json.getInt("total_pages");
                     JSONArray results = json.getJSONArray("results");
                     for (int i = 0; i<results.length(); i++) {
-                        load.add(new MovieItem(results.getJSONObject(i)));
+                        MovieItem item = new MovieItem(results.getJSONObject(i));
+                        item.downloadPoster();
+                        load.add(item);
                     }
                     loadedMovies = load;
                     lock = false;
                 } catch (JSONException e) {
                     Log.e("JSON", e.toString());
-                    Toast.makeText(context, "Could not load movies.", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "Could not load movies.", Toast.LENGTH_LONG).show();
                     loadedMovies = null;
                     lock = false;
                 }
@@ -59,7 +60,7 @@ public class ThemoviedbWrapper {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 //Log.e("FAILEURE", new String(responseBody));
-                Toast.makeText(context, "Can't load more movies.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Can't load more movies.", Toast.LENGTH_LONG).show();
                 loadedMovies = null;
                 lock = false;
             }
@@ -68,7 +69,7 @@ public class ThemoviedbWrapper {
         try {
             while (lock) {
                 Log.e("SLEEP", "SLEEP");
-                Thread.sleep(200L);
+                Thread.sleep(100L);
             }
         } catch (InterruptedException e) {
             return null;

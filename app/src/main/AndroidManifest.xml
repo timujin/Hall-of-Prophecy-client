@@ -125,6 +125,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".GenericPredictionVIew.ViewMovieRatingsPrediction"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".GenericProfileView.GPVActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -153,8 +157,7 @@
             android:name=".GenericCreatePrediction.MovieRatings.MovieRatingsCreatePredictionActivity"
             android:label="@string/title_activity_movie_ratings_create_prediction"
 
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

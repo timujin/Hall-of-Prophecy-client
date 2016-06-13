@@ -43,7 +43,7 @@ public class PredictionPanelAdapter extends ArrayAdapter<GenericPrediction> {
             title.setText("Error");
         } else {
             title.setText(object.getDescriptionBrief());
-            type.setText(object.getType());
+            type.setText(object.getTypeVerbose());
             dueText.setText(object.getDueDate());
         }
         return rowView;

@@ -170,13 +170,15 @@ public abstract class GenericPrediction {
                 return new TwitterPrediction(json, context);
             case "yahooFinance":
                 return new YahooPrediction(json, context);
+            case "movieRatings":
+                return new MovieRatingsPrediction(json, context);
             default:
                 return null;
         }
     }
 
     static public String[] getPredictionTypes() {
-        return new String[]{"twitter","yahooFinance"};
+        return new String[]{"twitter","yahooFinance","movieRatings"};
     }
 
 

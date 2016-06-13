@@ -1,7 +1,10 @@
 package com.archonmode.artemsinyakov.hallofprophecy.GenericCreatePrediction.MovieRatings;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import com.archonmode.artemsinyakov.hallofprophecy.InfiniteScroll.InfiniteScrollListAdapter;
 
@@ -13,7 +16,9 @@ public class MoviesListAdapter extends InfiniteScrollListAdapter {
 
     // A placeholder for all the data points
     private List<MovieItem> entries = new ArrayList<MovieItem>();
+    private List<MovieItem> visibleEntries = new ArrayList<MovieItem>();
     private NewPageListener newPageListener;
+    private String filterString = null;
 
     // A demo listener to pass actions from view to adapter
     public static abstract class NewPageListener {
@@ -25,36 +30,32 @@ public class MoviesListAdapter extends InfiniteScrollListAdapter {
         this.newPageListener = newPageListener;
     }
 
-    public void addEntriesToTop(List<MovieItem> entries) {
-        // Add entries in reversed order to achieve a sequence used in most of messaging/chat apps
-        if (entries != null) {
-            Collections.reverse(entries);
-        }
-        // Add entries to the top of the list
-        this.entries.addAll(0, entries);
-        notifyDataSetChanged();
-    }
-
     public void addEntriesToBottom(List<MovieItem> entries) {
         // Add entries to the bottom of the list
         this.entries.addAll(entries);
+        updateVisibleList();
         notifyDataSetChanged();
     }
 
     public void clearEntries() {
         // Clear all the data points
         this.entries.clear();
+        this.visibleEntries.clear();
         notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return entries.size();
+        return visibleEntries.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return entries.get(position);
+        if (filterString == null)
+            return entries.get(position);
+        else {
+            return visibleEntries.get(position);
+        }
     }
 
     @Override
@@ -75,5 +76,23 @@ public class MoviesListAdapter extends InfiniteScrollListAdapter {
             return newPageListener.getInfiniteScrollListView(position, convertView, parent);
         }
         return convertView;
+    }
+
+    private void updateVisibleList() {
+        visibleEntries = new ArrayList<>();
+        for (MovieItem item : entries) {
+            if (compareToFilter(item, filterString))
+                visibleEntries.add(item);
+        }
+    }
+
+    public void filter(String filter) {
+        this.filterString = filter;
+        updateVisibleList();
+        notifyDataSetChanged();
+    }
+
+    private boolean compareToFilter(MovieItem item, String filter) {
+        return  filter == null || filter.equals("") || item.getTitle().toLowerCase().contains(filter);
     }
 }

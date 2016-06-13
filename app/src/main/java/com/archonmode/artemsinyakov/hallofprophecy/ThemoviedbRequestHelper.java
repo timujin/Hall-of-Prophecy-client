@@ -1,6 +1,7 @@
 package com.archonmode.artemsinyakov.hallofprophecy;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -16,6 +17,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 public class ThemoviedbRequestHelper {
 
     private static final String BASE_URL = "http://api.themoviedb.org";
+    private static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
+    private static final String IMAGE_POSTER_SIZE = "w154";
     private static final String apiKey = "e39ba2b1bbc4afffdf0b2df5dd9d3684";
     private static AsyncHttpClient client = new SyncHttpClient();
 
@@ -49,6 +52,17 @@ public class ThemoviedbRequestHelper {
         if (page > 0)
             withpage.add("page", String.valueOf(page));
         getUpcomingMovies(withpage, responseHandler);
+    }
+
+    public static String getImageUri(String relativeURI) {
+        return IMAGE_BASE_URL + IMAGE_POSTER_SIZE + relativeURI;
+    }
+
+    public static void searchForMovieByTitle(String title, AsyncHttpResponseHandler responseHandler) {
+        RequestParams params = new RequestParams();
+        params.add("api_key", apiKey);
+        params.add("query", title);
+        client.get(getAbsoluteUrl("/3/search/movie"), params, responseHandler);
     }
 
     private static String getAbsoluteUrl(String relativeUrl) {
